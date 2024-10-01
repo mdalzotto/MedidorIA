@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0.30-debian
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: medidor
+      MYSQL_USER: medidor
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - app-network
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=medidor
+      - DB_PASSWORD=root
+      - DB_NAME=medidor
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db:
