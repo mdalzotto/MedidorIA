@@ -41,9 +41,9 @@ A API será iniciada em http://localhost:3000.
 
 ## Rotas da API
 
-### **[POST]** **/upload**
+### **[POST]** `/upload`
 
-Para fazer upload de uma leitura, envie uma requisição POST para **/upload** com o seguinte corpo:
+Para fazer upload de uma leitura, envie uma requisição **POST** para `/upload` com o seguinte corpo:
 
   ```bash
   {
@@ -54,7 +54,7 @@ Para fazer upload de uma leitura, envie uma requisição POST para **/upload** c
 }
   ```
 
-### **[**PATCH**]** **/confirm**
+### **[**PATCH**]** `/confirm`
 
 Responsável por confirmar ou corrigir o valor lido pelo LLM
 
@@ -68,16 +68,14 @@ Exemplo de uso:
 
   ```
 
-### **[**GET**]** **/{customer_code}/list**
+### **[**GET**]** `/{customer_code}/list`
 
-Responsável por listar as medidas realizadas por um determinado cliente:
+Responsável por listar as medidas realizadas por um determinado cliente
+
+Para listar as leituras de um cliente, envie uma requisição **GET** para `/{customer_code}/list` com o parâmetro `opcional` **measure_type**. Este parâmetro pode ser `WATER` ou `GAS`. Se o parâmetro for informado, a API filtrará apenas os valores do tipo especificado; caso contrário, retornará todos os tipos.
 
 Exemplo de uso:
 
   ```bash
-   {
- "measure_uuid": "string",
- "confirmed_value": integer
-}
-
+  curl "http://localhost:3000/{measure_uuid}}/list?measure_type=GAS"
   ```
